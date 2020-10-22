@@ -1,2 +1,2 @@
-rootProject.name = "kotlin-gradle-example"
+rootProject.name = "igor-gateway"
 
