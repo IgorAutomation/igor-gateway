@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+  "igor-gateway",
+  "igor-gateway-daemon"
+]
