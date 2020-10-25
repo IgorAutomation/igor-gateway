@@ -1,7 +1,6 @@
 [package]
 name = "igor-gateway"
 version = "0.1.0"
-authors = ["Andrey Cherkashin <andoriyu@gmail.com>", "Jeremy Arnold <jeremy@possiblyfaulty.com"]
 edition = "2018"
 
 [dependencies]
@@ -9,7 +8,7 @@ tracing = "0.1"
 tracing-futures = { version = "0.2" }
 prost = "0.6"
 prost-types = "0.6"
-tokio = { version = "0.3", features = ["full"] }
+tokio = { version = "0.2", features = ["full"] }
 hyper = "0.13"
 futures = "0.3"
 tonic =  { version = "0.3", git = "https://github.com/hyperium/tonic.git", rev = "f1275b611e38ec5fe992b2f10552bf95e8448b17" }

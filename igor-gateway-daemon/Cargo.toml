@@ -1,11 +1,10 @@
 [package]
 name = "igor-gateway-daemon"
 version = "0.1.0"
-authors = ["Andrey Cherkashin <with.out@me.com>", "Jeremy Arnold <jeremy@possiblyfaulty.com"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 igor-gateway = { path = "../igor-gateway" }
-tokio = { version = "0.2", features = ["full", "rt-threaded"] }
+tokio = { version = "0.2", features = ["full"] }
