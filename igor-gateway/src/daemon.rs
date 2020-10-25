@@ -6,19 +6,25 @@ use warp::Filter;
 use futures::future::{self, Either, TryFutureExt};
 use hyper::{service::make_service_fn, Server};
 use http::version::Version;
+use tracing::info;
 use crate::grpc::MyGreeter;
 use crate::grpc::hello_world::greeter_server::{GreeterServer};
+use crate::db::create_pool;
+use crate::config::Config;
 
 pub async fn start_server() -> Result<(), Box<dyn std::error::Error>> {
-    let addr = "127.0.0.1:1337".parse().unwrap();
 
-    println!("Listening on {}", addr);
 
     let mut warp = warp::service(warp::path("hello").map(|| "hello, world!"));
+    let builder = Config::builder().unwrap();
+    //builder.add_chunk_full(input, Priority::default(), DEFAULT_DUPLICATE_STRATEGY).unwrap();
+    let config: Config = builder.build().unwrap();
+    let pool = create_pool(&config).await.unwrap();
 
-    Server::bind(&addr)
+    info!("Listening on {}", config.listen);
+    Server::bind(&config.listen)
         .serve(make_service_fn(move |_| {
-            let greeter = GreeterServer::new(MyGreeter::default());
+            let greeter = GreeterServer::new(MyGreeter::new(pool.clone()));
             let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
             tokio::spawn(async move {
                 health_reporter

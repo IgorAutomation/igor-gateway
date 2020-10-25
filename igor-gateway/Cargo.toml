@@ -17,5 +17,8 @@ warp = "0.2"
 tower = "0.3"
 http = "0.2"
 http-body = "0.3"
+sqlx = { version = "0.4.0-beta.1", features = ["sqlite"] }
+uclicious = "0.1"
+uclicious_derive = "0.1"
 [build-dependencies]
 tonic-build = "0.3"

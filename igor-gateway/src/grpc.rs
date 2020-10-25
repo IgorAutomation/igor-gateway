@@ -1,12 +1,22 @@
 use tonic::{Request, Status, Response};
 use crate::grpc::hello_world::{HelloReply, HelloRequest};
 use crate::grpc::hello_world::greeter_server::{Greeter};
+use tracing::debug;
+use sqlx::SqlitePool;
 
 pub mod hello_world {
     tonic::include_proto!("helloworld"); // The string specified here must match the proto package name
 }
-#[derive(Debug, Default)]
-pub struct MyGreeter {}
+#[derive(Debug)]
+pub struct MyGreeter {
+    pool: SqlitePool
+}
+
+impl MyGreeter {
+    pub fn new(pool: SqlitePool) -> Self {
+        MyGreeter { pool }
+    }
+}
 
 #[tonic::async_trait]
 impl Greeter for MyGreeter {
@@ -15,7 +25,7 @@ impl Greeter for MyGreeter {
         request: Request<HelloRequest>, // Accept request of type HelloRequest
     ) -> Result<Response<HelloReply>, Status> {
         // Return an instance of type HelloReply
-        println!("Got a request: {:?}", request);
+        debug!("Got a request: {:?}, DbClosed?: {}", request, self.pool.is_closed());
 
         let reply = hello_world::HelloReply {
             message: format!("Hello {}!", request.into_inner().name).into(), // We must use .into_inner() as the fields of gRPC requests and responses are private
