@@ -1,20 +1,18 @@
-use crate::helpers::{Error, EitherBody};
+use crate::config::Config;
+use crate::db::create_pool;
+use crate::grpc::hello_world::greeter_server::GreeterServer;
+use crate::grpc::MyGreeter;
+use crate::helpers::{EitherBody, Error};
+use futures::future::{self, Either, TryFutureExt};
+use http::version::Version;
+use hyper::{service::make_service_fn, Server};
 use std::convert::Infallible;
 use tonic::transport::Server as TonicServer;
 use tower::Service;
-use warp::Filter;
-use futures::future::{self, Either, TryFutureExt};
-use hyper::{service::make_service_fn, Server};
-use http::version::Version;
 use tracing::info;
-use crate::grpc::MyGreeter;
-use crate::grpc::hello_world::greeter_server::{GreeterServer};
-use crate::db::create_pool;
-use crate::config::Config;
+use warp::Filter;
 
 pub async fn start_server() -> Result<(), Box<dyn std::error::Error>> {
-
-
     let mut warp = warp::service(warp::path("hello").map(|| "hello, world!"));
     let builder = Config::builder().unwrap();
     //builder.add_chunk_full(input, Priority::default(), DEFAULT_DUPLICATE_STRATEGY).unwrap();

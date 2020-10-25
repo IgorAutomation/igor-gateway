@@ -1,7 +1,7 @@
-use uclicious::{Uclicious};
 use std::net::SocketAddr;
+use uclicious::Uclicious;
 
-#[derive(Debug,Uclicious)]
+#[derive(Debug, Uclicious)]
 #[ucl(include(chunk = ""))]
 pub struct Config {
     #[ucl(default = "String::from(\"sqlite::memory:\")")]

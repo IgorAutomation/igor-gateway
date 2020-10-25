@@ -1,9 +1,8 @@
-pub mod grpc;
-pub mod daemon;
-pub mod helpers;
-pub mod db;
 pub mod config;
-
+pub mod daemon;
+pub mod db;
+pub mod grpc;
+pub mod helpers;
 
 #[cfg(test)]
 mod tests {

@@ -10,11 +10,11 @@ pub enum EitherBody<A, B> {
 }
 
 impl<A, B> http_body::Body for EitherBody<A, B>
-    where
-        A: http_body::Body + Send + Unpin,
-        B: http_body::Body<Data = A::Data> + Send + Unpin,
-        A::Error: Into<Error>,
-        B::Error: Into<Error>,
+where
+    A: http_body::Body + Send + Unpin,
+    B: http_body::Body<Data = A::Data> + Send + Unpin,
+    A::Error: Into<Error>,
+    B::Error: Into<Error>,
 {
     type Data = A::Data;
     type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
