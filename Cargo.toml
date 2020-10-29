@@ -4,3 +4,6 @@ members = [
   "igor-gateway",
   "igor-gateway-daemon"
 ]
+
+[patch.'https://github.com/fxbox/openzwave-rust']
+openzwave = { git = "https://github.com/IgorAutomation/openzwave-rust" }
