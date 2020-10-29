@@ -30,8 +30,7 @@ impl ZWaveController {
     /// Create an instance of our controller
     ///
     pub fn new(device: String) -> Self {
-        let mut device_args = Vec::new();
-        device_args.push(device);
+        let device_args = vec![device];
         let options = InitOptions {
             devices: Some(device_args),
             config_path: ConfigPath::Default,
@@ -61,14 +60,10 @@ impl ZWaveController {
     /// Get a list of home ids.
     ///
     pub fn get_home_ids(&self) -> Vec<u32> {
-        let mut ret = Vec::new();
         let state = self.ozw.get_state();
-        let controllers = state.get_controllers();
-        for (controller, _info) in controllers {
-            ret.push(controller.get_home_id())
-        }
-
-        return ret;
+        return state.get_controllers().iter()
+            .map(|(controller, _info)| controller.get_home_id())
+            .collect();
     }
 
     ///
