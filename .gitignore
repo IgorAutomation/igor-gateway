@@ -25,3 +25,8 @@ hs_err_pid*
 .gradle
 .idea
 build
+**/target
+
+logs/*
+
+OZW_Log.txt
