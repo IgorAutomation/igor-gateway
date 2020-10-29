@@ -1530,7 +1530,7 @@ dependencies = [
 [[package]]
 name = "openzwave"
 version = "0.1.1"
-source = "git+https://github.com/fxbox/openzwave-rust#2c2910a5fa6d6bc948e9463f13cad85e38e0266a"
+source = "git+https://github.com/IgorAutomation/openzwave-rust#d9d7fa86f0d9043e1d758f4ed64da4556df5e3e2"
 dependencies = [
  "itertools 0.4.19",
  "libc",
@@ -1551,7 +1551,7 @@ dependencies = [
 [[package]]
 name = "openzwave-sys"
 version = "0.1.1"
-source = "git+https://github.com/fxbox/openzwave-rust#2c2910a5fa6d6bc948e9463f13cad85e38e0266a"
+source = "git+https://github.com/IgorAutomation/openzwave-rust#d9d7fa86f0d9043e1d758f4ed64da4556df5e3e2"
 dependencies = [
  "gcc",
  "libc",
