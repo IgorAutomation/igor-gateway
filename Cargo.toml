@@ -4,6 +4,12 @@ members = [
   "igor-gateway",
   "igor-gateway-daemon"
 ]
+[patch.crates-io]
+openzwave-sys = { git = "https://github.com/IgorAutomation/openzwave-rust" }
 
 [patch.'https://github.com/fxbox/openzwave-rust']
 openzwave = { git = "https://github.com/IgorAutomation/openzwave-rust" }
+openzwave-sys = { git = "https://github.com/IgorAutomation/openzwave-rust" }
+
+[patch.'https://github.com/dhylands/serial-ports-rs']
+serial_ports = { git = "https://github.com/IgorAutomation/serial-ports-rs" }

@@ -4,6 +4,8 @@ use sqlx::SqlitePool;
 use tonic::{Request, Response, Status};
 use tracing::debug;
 
+pub mod mqtt;
+
 pub mod hello_world {
     tonic::include_proto!("helloworld"); // The string specified here must match the proto package name
 }
