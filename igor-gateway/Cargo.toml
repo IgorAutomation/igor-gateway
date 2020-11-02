@@ -20,6 +20,9 @@ http-body = "0.3"
 sqlx = { version = "0.4.0-beta.1", features = ["sqlite"] }
 uclicious = "0.1"
 uclicious_derive = "0.1"
+directories-next = "2.0.0"
+rumqttc = "0.2.0"
+url = "2.1"
 "openzwave-stateful" = { git = "https://github.com/fxbox/openzwave-stateful-rust" }
 
 [build-dependencies]

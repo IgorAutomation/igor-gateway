@@ -1,0 +1,11 @@
+syntax = "proto3";
+package  mqtt.broker_metrics;
+
+service BrokerMetrics {
+  rpc Version(VersionRequest) returns (VersionResponse);
+}
+
+message VersionRequest {}
+message VersionResponse {
+  string version = 1;
+}
