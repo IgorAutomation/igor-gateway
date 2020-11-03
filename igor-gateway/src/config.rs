@@ -1,7 +1,8 @@
 use std::net::SocketAddr;
-use uclicious::{Uclicious};
+use uclicious::{Uclicious, ObjectError};
 use std::path::{Path, PathBuf};
 use std::error::Error;
+use std::convert::{From, TryFrom};
 use uclicious::{DEFAULT_DUPLICATE_STRATEGY, Priority};
 
 #[derive(Debug, Uclicious, Clone)]
@@ -9,6 +10,7 @@ pub struct Config {
     pub database_path: String,
     pub listen: SocketAddr,
     pub mqtt: Mqtt,
+    pub zwave: ZWave,
 }
 
 #[derive(Debug, Uclicious, Clone)]
@@ -23,6 +25,41 @@ pub struct Mqtt {
 pub struct MqttAuthentication {
     pub username: String,
     pub password: String,
+}
+
+#[derive(Debug, Uclicious, Clone)]
+#[ucl(skip_builder)]
+pub struct ZWave {
+    pub host: String,
+    pub home_id: String,
+    pub devices: Vec<Device>
+}
+
+#[derive(Debug, Uclicious, Clone)]
+#[ucl(skip_builder)]
+pub struct Device {
+    pub id: String,
+    pub device_type: String,
+    #[ucl(try_from="String")]
+    pub handler: DeviceType
+}
+
+#[derive(Debug, Eq, PartialEq, Clone)]
+pub enum DeviceType {
+    BooleanSwitch,
+    DoubleSwitch
+}
+
+impl TryFrom<String> for DeviceType {
+    type Error = ObjectError;
+
+    fn try_from(value: String) -> Result<DeviceType, Self::Error> {
+        match value.to_lowercase().as_str() {
+            "booleanswitch" => Ok(DeviceType::BooleanSwitch),
+            "doubleswitch" => Ok(DeviceType::DoubleSwitch),
+            _ => Err(ObjectError::other(format!("{} is not a supported value.", value)))
+        }
+    }
 }
 
 impl Config {
@@ -48,7 +85,8 @@ impl ConfigBuilder {
     pub fn init(mut self) -> Result<Config, Box<dyn Error>> {
         self.set_igor_variables();
         self.add_chunk_full(include_str!("../../default.conf"), Priority::from(0), DEFAULT_DUPLICATE_STRATEGY)?;
-        self.build()
+        let ret = self.build();
+        ret
     }
 }
 
